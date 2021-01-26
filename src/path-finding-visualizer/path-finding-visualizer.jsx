@@ -1,4 +1,8 @@
 import React, {Component} from 'react';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+
 import Node from './node/node';
 import {dijkstra, getNodesInShortestPathOrder} from '../algorithms/dijkstra';
 
@@ -78,35 +82,45 @@ export default class PathfindingVisualizer extends Component {
 
         return (
             <>
-                <button onClick={() => this.visualizeDijkstra()}>
-                    Visualize Dijkstra's Algorithm
-                </button>
-                <div className="grid">
-                    {grid.map((row, rowIdx) => {
-                        return (
-                            <div key={rowIdx}>
-                                {row.map((node, nodeIdx) => {
-                                    const {row, col, isFinish, isStart, isWall} = node;
+                <Grid container spacing={3}>
+                    <Grid item xs={12}>
+                        <Paper className="item-spacing">
+                            <Button variant="outlined" color="primary" onClick={() => this.visualizeDijkstra()}>
+                                Visualize Dijkstra's Algorithm
+                            </Button>
+                        </Paper>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Paper className="item-spacing">
+                            <div className="grid">
+                                {grid.map((row, rowIdx) => {
                                     return (
-                                        <Node
-                                            key={nodeIdx}
-                                            col={col}
-                                            isFinish={isFinish}
-                                            isStart={isStart}
-                                            isWall={isWall}
-                                            mouseIsPressed={mouseIsPressed}
-                                            onMouseDown={(row, col) => this.handleMouseDown(row, col)}
-                                            onMouseEnter={(row, col) =>
-                                                this.handleMouseEnter(row, col)
-                                            }
-                                            onMouseUp={() => this.handleMouseUp()}
-                                            row={row}/>
+                                        <div key={rowIdx}>
+                                            {row.map((node, nodeIdx) => {
+                                                const {row, col, isFinish, isStart, isWall} = node;
+                                                return (
+                                                    <Node
+                                                        key={nodeIdx}
+                                                        col={col}
+                                                        isFinish={isFinish}
+                                                        isStart={isStart}
+                                                        isWall={isWall}
+                                                        mouseIsPressed={mouseIsPressed}
+                                                        onMouseDown={(row, col) => this.handleMouseDown(row, col)}
+                                                        onMouseEnter={(row, col) =>
+                                                            this.handleMouseEnter(row, col)
+                                                        }
+                                                        onMouseUp={() => this.handleMouseUp()}
+                                                        row={row}/>
+                                                );
+                                            })}
+                                        </div>
                                     );
                                 })}
                             </div>
-                        );
-                    })}
-                </div>
+                        </Paper>
+                    </Grid>
+                </Grid>
             </>
         );
     }
